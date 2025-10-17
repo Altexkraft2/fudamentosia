@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos de la Inteligencia Artificial</title>
+    <style>
+        /* Estilos generales estilo Word */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Calibri', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.15;
+            font-size: 11pt;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 21cm;
+            margin: 0 auto;
+            padding: 1.5cm 2cm;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            min-height: 100vh;
+        }
+        
+        /* Encabezado estilo Word */
+        header {
+            text-align: center;
+            margin-bottom: 24pt;
+            padding-bottom: 12pt;
+            border-bottom: 1.5pt solid #2E74B5;
+        }
+        
+        h1 {
+            font-size: 16pt;
+            font-weight: bold;
+            color: #2E74B5;
+            margin-bottom: 6pt;
+        }
+        
+        .subtitle {
+            font-size: 12pt;
+            color: #000000;
+            font-weight: normal;
+        }
+        
+        .document-info {
+            font-size: 9pt;
+            color: #666666;
+            margin-top: 6pt;
+        }
+        
+        /* Índice didáctico estilo Word */
+        .indice {
+            margin: 18pt 0;
+            padding: 15pt;
+            border: 1pt solid #D0D0D0;
+            background: #F9F9F9;
+        }
+        
+        .indice h2 {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #2E74B5;
+            margin-bottom: 9pt;
+            border-bottom: 1pt solid #2E74B5;
+            padding-bottom: 3pt;
+        }
+        
+        .indice-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6pt;
+        }
+        
+        .indice-item {
+            padding: 6pt;
+            border-left: 3pt solid #2E74B5;
+            background: white;
+        }
+        
+        .indice-item a {
+            text-decoration: none;
+            color: #000000;
+            display: block;
+            font-size: 10pt;
+        }
+        
+        .indice-item .numero {
+            font-weight: bold;
+            color: #2E74B5;
+            margin-right: 6pt;
+        }
+        
+        /* Secciones estilo Word */
+        section {
+            margin: 18pt 0;
+        }
+        
+        h2 {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #2E74B5;
+            margin: 12pt 0 6pt 0;
+            border-bottom: 1pt solid #D0D0D0;
+            padding-bottom: 3pt;
+        }
+        
+        h3 {
+            font-size: 11pt;
+            font-weight: bold;
+            color: #000000;
+            margin: 9pt 0 3pt 0;
+        }
+        
+        p {
+            margin-bottom: 6pt;
+            text-align: justify;
+            line-height: 1.15;
+        }
+        
+        /* Listas estilo Word */
+        ul, ol {
+            margin: 6pt 0 6pt 36pt;
+        }
+        
+        li {
+            margin-bottom: 3pt;
+            line-height: 1.15;
+        }
+        
+        /* Bloques de código estilo Word */
+        .code-block {
+            background: #F2F2F2;
+            border: 1pt solid #D0D0D0;
+            padding: 9pt;
+            margin: 9pt 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9pt;
+            line-height: 1.1;
+        }
+        
+        .code-comment {
+            color: #2D7D2D;
+        }
+        
+        /* Tablas estilo Word */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 9pt 0;
+            font-size: 9pt;
+        }
+        
+        th {
+            background: #2E74B5;
+            color: white;
+            font-weight: bold;
+            padding: 6pt;
+            border: 1pt solid #1C4E7F;
+            text-align: left;
+        }
+        
+        td {
+            padding: 6pt;
+            border: 1pt solid #D0D0D0;
+            vertical-align: top;
+        }
+        
+        tr:nth-child(even) {
+            background: #F2F2F2;
+        }
+        
+        /* Citas y bloques especiales */
+        blockquote {
+            border-left: 3pt solid #2E74B5;
+            padding-left: 12pt;
+            margin: 9pt 0;
+            background: #F9F9F9;
+            padding: 9pt 12pt;
+            font-style: italic;
+        }
+        
+        /* Diagramas y elementos visuales */
+        .diagram {
+            text-align: center;
+            margin: 12pt 0;
+            padding: 9pt;
+            border: 1pt solid #D0D0D0;
+            background: white;
+        }
+        
+        .neuron {
+            display: inline-block;
+            width: 60pt;
+            height: 60pt;
+            background: #2E74B5;
+            color: white;
+            border-radius: 50%;
+            line-height: 60pt;
+            text-align: center;
+            margin: 6pt;
+            font-weight: bold;
+            font-size: 9pt;
+        }
+        
+        .connection {
+            display: inline-block;
+            width: 30pt;
+            height: 1pt;
+            background: #666666;
+            margin: 0 3pt;
+            vertical-align: middle;
+        }
+        
+        /* Navegación entre secciones */
+        .nav-secciones {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 18pt;
+            padding-top: 9pt;
+            border-top: 1pt solid #D0D0D0;
+        }
+        
+        .nav-btn {
+            background: #2E74B5;
+            color: white;
+            padding: 6pt 12pt;
+            text-decoration: none;
+            font-size: 9pt;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .nav-btn:hover {
+            background: #1C4E7F;
+        }
+        
+        /* Encabezados de página */
+        .page-break {
+            page-break-before: always;
+            margin-top: 36pt;
+        }
+        
+        /* Elementos de formato Word */
+        .underline {
+            text-decoration: underline;
+        }
+        
+        .bold {
+            font-weight: bold;
+        }
+        
+        .highlight {
+            background: #FFF2CC;
+            padding: 1pt 2pt;
+        }
+        
+        /* Pie de página */
+        footer {
+            text-align: center;
+            margin-top: 24pt;
+            padding-top: 9pt;
+            border-top: 1pt solid #D0D0D0;
+            font-size: 9pt;
+            color: #666666;
+        }
+        
+        /* Números de página simulados */
+        .page-number {
+            position: fixed;
+            bottom: 1cm;
+            right: 2cm;
+            font-size: 9pt;
+            color: #666666;
+        }
+        
+        /* Responsive para impresión */
+        @media print {
+            .container {
+                box-shadow: none;
+                padding: 1.5cm 2cm;
+            }
+            
+            .nav-secciones {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 21cm) {
+            .container {
+                padding: 1cm;
+            }
+            
+            .indice-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <P>jesus Peña</P>
+            <p>31495853</p>
+            <h1>TELEPROCESOS</h1>
+            <h1>FUNDAMENTOS DE LA INTELIGENCIA ARTIFICIAL</h1>
+            
+        </header>
+        
+        <!-- Índice Didáctico -->
+        <div class="indice">
+            <h2>ÍNDICE DEL DOCUMENTO</h2>
+            <div class="indice-grid">
+                <div class="indice-item">
+                    <a href="#introduccion">
+                        <span class="numero">1.</span>
+                        Introducción Conceptual
+                    </a>
+                </div>
+                <div class="indice-item">
+                    <a href="#pilares-matematicos">
+                        <span class="numero">2.</span>
+                        Fundamentos Matemáticos
+                    </a>
+                </div>
+                <div class="indice-item">
+                    <a href="#algoritmos-fundamentales">
+                        <span class="numero">3.</span>
+                        Algoritmos Fundamentales
+                    </a>
+                </div>
+                <div class="indice-item">
+                    <a href="#enfoques-aprendizaje">
+                        <span class="numero">4.</span>
+                        Enfoques de Aprendizaje
+                    </a>
+                </div>
+                <div class="indice-item">
+                    <a href="#proceso-desarrollo">
+                        <span class="numero">5.</span>
+                        Desarrollo de Modelos
+                    </a>
+                </div>
+                <div class="indice-item">
+                    <a href="#aplicaciones">
+                        <span class="numero">6.</span>
+                        Aplicaciones Reales
+                    </a>
+                </div>
+                <div class="indice-item">
+                    <a href="#consideraciones-eticas">
+                        <span class="numero">7.</span>
+                        Aspectos Éticos
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+        
+        <section id="introduccion">
+            <h2>1. INTRODUCCIÓN CONCEPTUAL</h2>
+            <p>La <span class="bold">Inteligencia Artificial (IA)</span> constituye una disciplina científica cuyo objetivo fundamental es desarrollar sistemas capaces de realizar tareas que normalmente requieren inteligencia humana. Estos sistemas no se limitan a ejecutar instrucciones predefinidas, sino que demuestran capacidades de <span class="highlight">aprendizaje, razonamiento lógico, adaptación a nueva información y percepción del entorno</span>.</p>
+            
+            <blockquote>
+                "La IA representa la culminación de esfuerzos interdisciplinarios para comprender y emular procesos cognitivos mediante sistemas computacionales."
+            </blockquote>
+            
+            <p>La analogía más precisa para comprender la IA es el proceso de enseñanza a un ser humano: inicialmente se proporcionan ejemplos (conjuntos de datos), posteriormente el sistema practica y comete errores (fase de entrenamiento), y finalmente desarrolla la capacidad de reconocer patrones de manera autónoma (modelo entrenado).</p>
+            
+            <h3>1.1. Características Definitorias</h3>
+            <ul>
+                <li><span class="bold">Aprendizaje autónomo:</span> Capacidad de mejorar el rendimiento mediante la experiencia</li>
+                <li><span class="bold">Razonamiento lógico:</span> Aplicación de reglas y lógica para resolver problemas</li>
+                <li><span class="bold">Adaptabilidad:</span> Ajuste del comportamiento ante nueva información</li>
+                <li><span class="bold">Percepción contextual:</span> Interpretación del entorno a través de datos sensoriales</li>
+            </ul>
+            
+
+        </section>
+        
+        <div class="page-break"></div>
+        
+        <section id="pilares-matematicos">
+            <h2>2. FUNDAMENTOS MATEMÁTICOS DE LA IA</h2>
+            
+            <h3>2.1. Álgebra Lineal</h3>
+            <p>Las redes neuronales conceptualmente operan como una serie de transformaciones matemáticas sucesivas. Cada capa procesa los datos de entrada (representados como vectores) y los transforma progresivamente para extraer características relevantes.</p>
+            
+            <div class="code-block">
+                <span class="code-comment"># Operación básica en una neurona:</span><br>
+                output = activation_function(w1*x1 + w2*x2 + ... + wn*xn + bias)
+            </div>
+            
+            <h3>2.2. Cálculo Diferencial</h3>
+            <p>El proceso de optimización en IA puede compararse con el afinado de un instrumento musical. Cuando un modelo comete un error durante la predicción, el cálculo diferencial proporciona las herramientas para determinar la dirección y magnitud de ajuste requerida en los parámetros.</p>
+            
+            <h3>2.3. Probabilidad y Estadística</h3>
+            <p>Estas disciplinas permiten cuantificar la incertidumbre inherente en los procesos de toma de decisión. De manera similar a como un meteorólogo establece probabilidades de precipitación basándose en datos históricos, los sistemas de IA calculan distribuciones de probabilidad para realizar predicciones fundamentadas.</p>
+            
+            <table>
+                <tr>
+                    <th>Concepto Matemático</th>
+                    <th>Aplicación en IA</th>
+                    <th>Ejemplo Práctico</th>
+                </tr>
+                <tr>
+                    <td>Vectores y Matrices</td>
+                    <td>Representación de datos y pesos en redes neuronales</td>
+                    <td>Imágenes como matrices de píxeles</td>
+                </tr>
+                <tr>
+                    <td>Derivadas Parciales</td>
+                    <td>Cálculo de gradientes para optimización</td>
+                    <td>Algoritmo de retropropagación</td>
+                </tr>
+                <tr>
+                    <td>Distribuciones de Probabilidad</td>
+                    <td>Modelado de incertidumbre en predicciones</td>
+                    <td>Clasificación con niveles de confianza</td>
+                </tr>
+            </table>
+            
+
+        </section>
+        
+        <section id="algoritmos-fundamentales">
+            <h2>3. ALGORITMOS FUNDAMENTALES</h2>
+            
+            <h3>3.1. Árboles de Decisión</h3>
+            <p>Estos algoritmos implementan un proceso de clasificación análogo al juego "20 preguntas", donde cada nodo representa una pregunta sobre los atributos de entrada y cada rama corresponde a una posible respuesta.</p>
+            
+            <div class="code-block">
+                <span class="code-comment"># Ejemplo simplificado de árbol de decisión:</span><br>
+                if temperatura > 38.5:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;if tos_persistente == True:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;diagnostico = "Consulta médica urgente"<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;else:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;diagnostico = "Reposo y observación"<br>
+                else:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;diagnostico = "Estado normal"
+            </div>
+            
+            <h3>3.2. Redes Neuronales Artificiales</h3>
+            <p>Inspiradas en la neurobiología del cerebro humano, las redes neuronales constan de unidades de procesamiento elementales (neuronas) interconectadas.</p>
+            
+            <div class="diagram">
+                <div class="neuron">Entrada</div>
+                <div class="connection"></div>
+                <div class="neuron">Oculta 1</div>
+                <div class="connection"></div>
+                <div class="neuron">Oculta 2</div>
+                <div class="connection"></div>
+                <div class="neuron">Salida</div>
+                <p style="margin-top: 9pt; font-size: 9pt;">Representación simplificada de una red neuronal feedforward</p>
+            </div>
+            
+            <h3>3.3. Deep Learning</h3>
+            <p>El aprendizaje profundo consiste en redes neuronales con múltiples capas intermedias (de ahí el término "profundo"), donde cada nivel aprende representaciones progresivamente más abstractas de los datos:</p>
+            
+            <table>
+                <tr>
+                    <th>Capas Iniciales</th>
+                    <th>Capas Intermedias</th>
+                    <th>Capas Finales</th>
+                </tr>
+                <tr>
+                    <td>Detectan características simples (bordes, texturas)</td>
+                    <td>Reconocen formas complejas (ojos, narices en imágenes faciales)</td>
+                    <td>Identifican objetos completos (rostros, vehículos)</td>
+                </tr>
+            </table>
+            
+
+        </section>
+        
+        <div class="page-break"></div>
+        
+        <section id="enfoques-aprendizaje">
+            <h2>4. ENFOQUES DE APRENDIZAJE AUTOMÁTICO</h2>
+            
+            <h3>4.1. Aprendizaje Supervisado</h3>
+            <p>Analogía: Un estudiante que prepara un examen disponiendo de un libro de respuestas. El algoritmo aprende a mapear entradas a salidas basándose en ejemplos etiquetados.</p>
+            
+            <p><span class="bold">Proceso típico:</span></p>
+            <ol>
+                <li>Recolección de dataset etiquetado</li>
+                <li>Identificación de patrones discriminativos</li>
+                <li>Generalización para clasificar nuevas instancias</li>
+            </ol>
+            
+            <h3>4.2. Aprendizaje No Supervisado</h3>
+            <p>Analogía: Explorar una biblioteca sin sistema de clasificación y descubrir agrupaciones naturales de libros por temática.</p>
+            
+            <h3>4.3. Aprendizaje por Refuerzo</h3>
+            <p>Analogía: Entrenamiento canino mediante refuerzo positivo y negativo. El algoritmo aprende mediante un proceso iterativo.</p>
+            
+            <div class="code-block">
+                <span class="code-comment"># Ciclo fundamental de aprendizaje por refuerzo:</span><br>
+                1. <span class="bold">Observación</span>: El agente percibe el estado del entorno<br>
+                2. <span class="bold">Acción</span>: Selecciona y ejecuta una operación<br>
+                3. <span class="bold">Recompensa</span>: Recibe feedback numérico<br>
+                4. <span class="bold">Aprendizaje</span>: Actualiza su política
+            </div>
+            
+
+        </section>
+        
+        <section id="proceso-desarrollo">
+            <h2>5. PROCESO DE DESARROLLO DE MODELOS DE IA</h2>
+            
+            <h3>5.1. Fase de Entrenamiento</h3>
+            <p>El proceso de entrenamiento sigue un patrón iterativo donde el modelo ajusta progresivamente sus parámetros internos para minimizar la discrepancia entre sus predicciones y los valores reales.</p>
+            
+            <h3>5.2. Fase de Validación</h3>
+            <p>Esta fase evalúa la capacidad de generalización del modelo utilizando un conjunto de datos independiente no empleado durante el entrenamiento.</p>
+            
+            <h3>5.3. Fase de Producción y Monitoreo</h3>
+            <p>Una vez desplegado en entornos operativos, el modelo requiere monitorización continua debido al fenómeno de "deriva del modelo".</p>
+            
+            <div class="diagram">
+                <h4>CICLO DE VIDA DE UN MODELO DE IA</h4>
+                <p>Recolección de Datos → Preprocesamiento → Entrenamiento → Validación → Despliegue → Monitoreo</p>
+            </div>
+            
+            <div class="nav-secciones">
+                <a href="#enfoques-aprendizaje" class="nav-btn">← Sección Anterior</a>
+                <a href="#aplicaciones" class="nav-btn">Siguiente Sección →</a>
+            </div>
+        </section>
+        
+        <section id="aplicaciones">
+            <h2>6. APLICACIONES EN CONTEXTOS REALES</h2>
+            
+            <h3>6.1. Diagnóstico Médico Asistido</h3>
+            <p>Los sistemas de IA no sustituyen al profesional médico, sino que funcionan como asistentes altamente especializados.</p>
+            
+            <h3>6.2. Vehículos Autónomos</h3>
+            <p>Estos sistemas integran múltiples componentes análogos a capacidades humanas:</p>
+            
+            <table>
+                <tr>
+                    <th>Componente del Sistema</th>
+                    <th>Análogo Humano</th>
+                    <th>Función</th>
+                </tr>
+                <tr>
+                    <td>Cámaras y sensores LIDAR</td>
+                    <td>Sistema visual</td>
+                    <td>Percepción del entorno</td>
+                </tr>
+                <tr>
+                    <td>Modelos de IA</td>
+                    <td>Corteza cerebral</td>
+                    <td>Procesamiento de información</td>
+                </tr>
+                <tr>
+                    <td>Sistemas de control</td>
+                    <td>Sistema neuromuscular</td>
+                    <td>Ejecución de decisiones</td>
+                </tr>
+            </table>
+            
+        </section>
+        
+        <div class="page-break"></div>
+        
+        <section id="consideraciones-eticas">
+            <h2>7. CONSIDERACIONES ÉTICAS Y LIMITACIONES</h2>
+            
+            <h3>7.1. Transparencia y Explicabilidad</h3>
+            <p>Muchos modelos avanzados de IA operan como "cajas negras" donde podemos observar las entradas y salidas, pero no comprender completamente el proceso interno de toma de decisiones.</p>
+            
+            <h3>7.2. Sesgos Algorítmicos</h3>
+            <p>Los modelos de IA inevitablemente reflejan y potencialmente amplifican los sesgos presentes en sus datos de entrenamiento.</p>
+            
+            <h3>7.3. Privacidad y Protección de Datos</h3>
+            <p>Los modelos sofisticados pueden inferir información sensible a partir de datos aparentemente anodinos.</p>
+            
+            <blockquote>
+                "El desarrollo ético de IA requiere no solo avances técnicos, sino también marcos regulatorios robustos y conciencia social sobre las implicaciones de estas tecnologías."
+            </blockquote>
+            
+        </section>
+        
+        
+        <footer>
+            <p>© 2025 - PEÑAHUB - Todos los derechos reservados</p>
+        </footer>
+        
+        <div class="page-number">1</div>
+    </div>
+</body>
+</html>
